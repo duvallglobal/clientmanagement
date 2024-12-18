@@ -1,83 +1,144 @@
 'use client'
 
 import { useState } from 'react'
-import Navigation from './Navigation'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import ClientOverview from './ClientOverview'
 import ContentLibrary from './ContentLibrary'
+import ContentCalendar from './ContentCalendar'
+import PerformanceMetrics from './PerformanceMetrics'
+import FinancialOverview from './FinancialOverview'
+import RevenueTracker from './RevenueTracker'
 import MessagingWidget from './MessagingWidget'
 import TaskManagement from './TaskManagement'
 import PasswordManager from './PasswordManager'
-import PerformanceMetrics from './PerformanceMetrics'
-import RevenueTracker from './RevenueTracker'
-import CalendarIntegration from './CalendarIntegration'
+import ResourceLibrary from './ResourceLibrary'
+import Onboarding from './Onboarding'
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState('overview')
-
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation />
-      <div className="container mx-auto px-6 py-8">
-        <div className="flex space-x-4 mb-6">
-          {['Overview', 'Content', 'Passwords', 'Tasks', 'Metrics', 'Finances'].map((tab) => (
-            <button
-              key={tab}
-              className={`px-4 py-2 text-sm font-medium rounded-md ${
-                activeTab === tab.toLowerCase()
-                  ? 'bg-gray-200 text-gray-800'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
-              onClick={() => setActiveTab(tab.toLowerCase())}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
-        {activeTab === 'overview' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <ClientOverview />
-            </div>
-            <div className="lg:col-span-1">
-              <MessagingWidget />
-            </div>
-            <div className="lg:col-span-3">
-              <CalendarIntegration />
-            </div>
+    <div className="container mx-auto px-4 py-8">
+      <Tabs defaultValue="overview" className="space-y-8">
+        <TabsList className="flex flex-wrap justify-start gap-2 mb-8">
+          <TabsTrigger value="overview" className="px-4 py-2 rounded-md">Overview</TabsTrigger>
+          <TabsTrigger value="content" className="px-4 py-2 rounded-md">Content</TabsTrigger>
+          <TabsTrigger value="performance" className="px-4 py-2 rounded-md">Performance</TabsTrigger>
+          <TabsTrigger value="finances" className="px-4 py-2 rounded-md">Finances</TabsTrigger>
+          <TabsTrigger value="management" className="px-4 py-2 rounded-md">Management</TabsTrigger>
+          <TabsTrigger value="resources" className="px-4 py-2 rounded-md">Resources</TabsTrigger>
+          <TabsTrigger value="onboarding" className="px-4 py-2 rounded-md">Onboarding</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="overview">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="shadow-lg rounded-lg overflow-hidden">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="text-lg font-semibold">Client Overview</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <ClientOverview />
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg rounded-lg overflow-hidden">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="text-lg font-semibold">Quick Communication</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <MessagingWidget />
+              </CardContent>
+            </Card>
           </div>
-        )}
-
-        {activeTab === 'content' && (
-          <div className="grid grid-cols-1 gap-6">
-            <ContentLibrary />
+        </TabsContent>
+        
+        <TabsContent value="content">
+          <div className="space-y-6">
+            <Card className="shadow-lg rounded-lg overflow-hidden">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="text-lg font-semibold">Content Library</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <ContentLibrary />
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg rounded-lg overflow-hidden">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="text-lg font-semibold">Content Calendar</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <ContentCalendar />
+              </CardContent>
+            </Card>
           </div>
-        )}
-
-        {activeTab === 'passwords' && (
-          <div className="grid grid-cols-1 gap-6">
-            <PasswordManager />
+        </TabsContent>
+        
+        <TabsContent value="performance">
+          <Card className="shadow-lg rounded-lg overflow-hidden">
+            <CardHeader className="bg-gray-50">
+              <CardTitle className="text-lg font-semibold">Performance Metrics</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <PerformanceMetrics />
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="finances">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="shadow-lg rounded-lg overflow-hidden">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="text-lg font-semibold">Financial Overview</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <FinancialOverview />
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg rounded-lg overflow-hidden">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="text-lg font-semibold">Revenue Tracker</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <RevenueTracker />
+              </CardContent>
+            </Card>
           </div>
-        )}
-
-        {activeTab === 'tasks' && (
-          <div className="grid grid-cols-1 gap-6">
-            <TaskManagement />
+        </TabsContent>
+        
+        <TabsContent value="management">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="shadow-lg rounded-lg overflow-hidden">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="text-lg font-semibold">Task Management</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <TaskManagement />
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg rounded-lg overflow-hidden">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="text-lg font-semibold">Password Manager</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <PasswordManager />
+              </CardContent>
+            </Card>
           </div>
-        )}
+        </TabsContent>
+        
+        <TabsContent value="resources">
+          <Card className="shadow-lg rounded-lg overflow-hidden">
+            <CardHeader className="bg-gray-50">
+              <CardTitle className="text-lg font-semibold">Resource Library</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <ResourceLibrary />
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-        {activeTab === 'metrics' && (
-          <div className="grid grid-cols-1 gap-6">
-            <PerformanceMetrics />
-          </div>
-        )}
-
-        {activeTab === 'finances' && (
-          <div className="grid grid-cols-1 gap-6">
-            <RevenueTracker />
-          </div>
-        )}
-      </div>
+        <TabsContent value="onboarding">
+          <Onboarding />
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
